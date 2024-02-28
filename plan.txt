@@ -1,0 +1,7 @@
+    find free api
+    Reads JSON from API
+    Inserts into RedisJSON
+    Does some processing (3 outputs) such as (matplotlib charts, aggregation,search,..)
+    add docstrings
+    add Classes
+    copy output and paste to google doc

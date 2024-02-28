@@ -1,0 +1,5 @@
+pip3 install -r requirements.txt
+
+Visual Studio Code:
+	Must run requirements to setup interpreter.
+	Must run code when terminal is in the same directory as script (for it to source config.yaml)
