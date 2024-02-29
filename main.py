@@ -21,5 +21,5 @@
 # for city_object in objects in redis
 #   do some outputs
 #       1. plot city, temperature
-#       2. maybe graph?
+#       2. maybe geolocation with redis?
 #       3. calculate tempeartures in varying scales
