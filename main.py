@@ -16,7 +16,7 @@
 #       //  destroy object
 #   // now you have a lot of objects with data per city
 #   //does it make sense to put this data into objects here?
-#   //for what?, maybe make objects in redis
+#   //for what?, maybe make objects in redis/ put data directly into redis for speed
 
 # for city_object in objects in redis
 #   do some outputs
@@ -28,6 +28,7 @@
 
 from ApiKeyProvider import ApiKeyProvider
 from WeatherClient import WeatherClient
+from InsertRedisData import InsertRedisData
 
 class WeatherApp:
     """
@@ -57,26 +58,35 @@ class WeatherApp:
         """
         Gets weather data for all cities in the list and displays the results.
         """
+        # Open Redis Connection
+        from db_config import get_redis_connection
+        import json
+        r = get_redis_connection()
+
+        #Insert Weather Data into Redis
         for city in self.cities:
             weather_data = self.weather_client.get_weather(city)
             if weather_data:
-                # Process the weather data
-                print(f"Weather data for {city}:")
-                print(weather_data)
-                # print(f"Type: ")
-                # print(type(weather_data)) //dict
+                # print(f"Weather data for {city}:")
+                # print(weather_data) #type:dict
+                InsertRedisData(city, weather_data, r)
             else:
                 print(f"Failed to retrieve weather data for {city}.")
+
 
 # Check if the script is run directly (not imported as a module)
 if __name__ == "__main__":
     # Create WeatherApp instance (optional)
     weather_app = WeatherApp()
 
-    # Add cities to the list (modify this section)
+    # Add cities to the list
     weather_app.add_city("New York")
     weather_app.add_city("London")
     weather_app.add_city("Paris")
+    weather_app.add_city("Tokyo")
+    weather_app.add_city("Shanghai")
+    weather_app.add_city("Taipei")
+
 
     # Run the app
     weather_app.run()
