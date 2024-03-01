@@ -63,7 +63,7 @@ class WeatherApp:
         import json
         r = get_redis_connection()
 
-        #Insert Weather Data into Redis
+        # Insert Weather Data into Redis
         for city in self.cities:
             weather_data = self.weather_client.get_weather(city)
             if weather_data:
@@ -74,6 +74,8 @@ class WeatherApp:
                 print(f"Failed to retrieve weather data for {city}.")
 
 
+        # Do processing with data
+                
 # Check if the script is run directly (not imported as a module)
 if __name__ == "__main__":
     # Create WeatherApp instance (optional)
