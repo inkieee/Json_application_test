@@ -67,8 +67,8 @@ class WeatherApp:
         for city in self.cities:
             weather_data = self.weather_client.get_weather(city)
             if weather_data:
-                # print(f"Weather data for {city}:")
-                # print(weather_data) #type:dict
+                print(f"\nCity: ",city)
+                print(weather_data)
                 InsertRedisData(city, weather_data, r)
             else:
                 print(f"Failed to retrieve weather data for {city}.")
