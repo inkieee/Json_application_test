@@ -37,7 +37,10 @@ data = {
    }
 }
 
-r.json().set('City:character:chicago', '.', json.dumps(data))
+city=input("Enter a city: ")
+city_key=f"weather_data_{city}"
+
+r.json().set(city_key, '.', json.dumps(data))
 
 ## This part is to retrieve the data
 
@@ -45,14 +48,14 @@ import redis
 import json
 
 # # Get JSON and decode 
-# json_data = r.json().get('friends:character:ross')
-# data = json.loads(json_data)
+json_data = r.json().get(city_key)
+data = json.loads(json_data)
 
-# # Extract fields  
-# name = data['name']
-# occupation = data['occupation']
-# education = data['education']
+# Extract fields  
+timezone = data['timezone']
+lat = data['lat']
+lon = data['lon']
 
-# print(f"Name: {name}")
-# print(f"Occupation: {occupation}") 
-# print(f"Education: {education}")
+print(f"Timezone: {timezone}")
+print(f"Latitude: {lat}") 
+print(f"Longitude: {lon}")
