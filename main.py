@@ -38,7 +38,7 @@ class WeatherApp:
         r = get_redis_connection()
         r.flushall()
 
-        
+
         # Insert Weather Data into Redis
         for city in self.cities:
             weather_data = self.weather_client.get_weather(city)
@@ -55,7 +55,7 @@ class WeatherApp:
         city_keys = city_plotter.get_city_keys()
         city_plotter.plot_city_weather(city_keys)
 
-        #Processing 2 object
+        #Processing 2 object: Aggregation
 
         #Processing 3 object
                 
@@ -67,12 +67,12 @@ if __name__ == "__main__":
 
     # Add cities to the list
     weather_app.add_city("New York City")
-    # weather_app.add_city("London")
-    # weather_app.add_city("Paris")
-    # weather_app.add_city("Tokyo")
-    # weather_app.add_city("Shanghai")
-    # weather_app.add_city("Taipei")
-    # weather_app.add_city("Sydney")
+    weather_app.add_city("London")
+    weather_app.add_city("Paris")
+    weather_app.add_city("Tokyo")
+    weather_app.add_city("Shanghai")
+    weather_app.add_city("Taipei")
+    weather_app.add_city("Sydney")
 
     # Run the app
     weather_app.run()

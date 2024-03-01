@@ -7,3 +7,4 @@ black
 flask-restful
 flask-httpauth
 pandas
+matplotlib

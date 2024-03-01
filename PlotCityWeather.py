@@ -1,5 +1,5 @@
 import json
-
+import matplotlib.pyplot as plt
 
 class PlotCityWeather:
     """
@@ -24,23 +24,47 @@ class PlotCityWeather:
         return keys
     
     def plot_city_weather(self, city_keys):
+        # Initialize lists to store data
+        latitudes = []
+        longitudes = []
+        temperatures = []
+        city_names = []
+
         # Process the retrieved keys
         for city_key in city_keys:
-            print(city_key)
+            
+            # Get City Data from Redis
             json_data = self.r.json().get(city_key) #coded raw json
             data = json.loads(json_data) #decoded json
-            print(data)
 
-            # timezone = data['timezone']
             coordinates = data['coord']
             lat = coordinates['lat']
             lon = coordinates['lon']
-
+            
             main=data['main']
             temperature=main['temp']
 
-            # print(f"Timezone: {timezone}")
-            print(f"Coordinates: {coordinates}")
-            print(f"Lat/Long: {lat},{lon}")
-            print(f"Temperature: {temperature}")
+            name = data['name']
+
+            # Append data to lists
+            latitudes.append(lat)
+            longitudes.append(lon)
+            temperatures.append(temperature)
+            city_names.append(name)
+
+        # Create scatter plot with different colors and labels
+        plt.figure(figsize=(8, 5))
+        for i, city_name in enumerate(city_names):
+            plt.scatter(latitudes[i], longitudes[i], label=city_name, s=80, c=plt.cm.viridis(i/len(city_names)))  # Use colormap
+
+        # Add plot elements
+        plt.xlabel("Latitude")
+        plt.ylabel("Longitude")
+        plt.title("Temperature by City Location")
+        plt.legend()
+        plt.grid(True)
+
+        # Show the plot
+        plt.show()
+
     
