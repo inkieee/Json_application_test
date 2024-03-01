@@ -37,7 +37,8 @@ data = {
    }
 }
 
-city=input("Enter a city: ")
+# city=input("Enter a city: ")
+city='Voorhees'
 city_key=f"weather_data:{city}"
 
 r.json().set(city_key, '.', json.dumps(data))
