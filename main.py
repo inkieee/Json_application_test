@@ -26,8 +26,8 @@
 #       2c. Search for cities with weather data b/w x and y
 #       3. calculate tempeartures in varying scales
 
-#from api_key_provider import ApiKeyProvider
-#from weather_client import WeatherClient
+from ApiKeyProvider import ApiKeyProvider
+from WeatherClient import WeatherClient
 
 class WeatherApp:
     """
@@ -62,8 +62,9 @@ class WeatherApp:
             if weather_data:
                 # Process the weather data
                 print(f"Weather data for {city}:")
-                # (Extract and display relevant information from the data dictionary)
-                # ...
+                print(weather_data)
+                # print(f"Type: ")
+                # print(type(weather_data)) //dict
             else:
                 print(f"Failed to retrieve weather data for {city}.")
 
