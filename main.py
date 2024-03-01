@@ -22,4 +22,6 @@
 #   do some outputs
 #       1. plot city, temperature
 #       2. maybe geolocation with redis?
+#       2b. Aggregate average temperature over all cities between lat/long
+#       2c. Search for cities with weather data b/w x and y
 #       3. calculate tempeartures in varying scales
