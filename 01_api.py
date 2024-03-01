@@ -21,9 +21,9 @@ if response.status_code == 200:
     print(data)
 
     # Extract relevant data
-    city = data["name"]
-    temperature = data["main"]["temp"] - 273.15  # Convert Kelvin to Celsius
-    weather_description = data["weather"][0]["description"]
+    #city = data["name"]
+    #temperature = data["main"]["temp"] - 273.15  # Convert Kelvin to Celsius
+    #weather_description = data["weather"][0]["description"]
 
     # # Print retrieved information
     # print(f"City: {city}")
