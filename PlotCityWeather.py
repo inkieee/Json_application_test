@@ -53,7 +53,6 @@ class PlotCityWeather:
             temperatures.append(temperature)
             city_names.append(name)
 
-        # Create separate plots for latitude vs temperature and longitude vs temperature
         # Latitude vs Temperature
         plt.figure(figsize=(8, 5))
         for i, city_name in enumerate(city_names):
