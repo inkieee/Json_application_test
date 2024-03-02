@@ -1,5 +1,6 @@
 import json
 import matplotlib.pyplot as plt
+import numpy as np
 
 class PlotCityWeather:
     """
@@ -52,19 +53,29 @@ class PlotCityWeather:
             temperatures.append(temperature)
             city_names.append(name)
 
-        # Create scatter plot with different colors and labels
+        # Create separate plots for latitude vs temperature and longitude vs temperature
+        # Latitude vs Temperature
         plt.figure(figsize=(8, 5))
         for i, city_name in enumerate(city_names):
-            plt.scatter(latitudes[i], longitudes[i], label=city_name, s=80, c=plt.cm.viridis(i/len(city_names)))  # Use colormap
-
-        # Add plot elements
+            plt.scatter(latitudes[i], temperatures[i], label=city_name, s=40, c=plt.cm.viridis(i / len(city_names)))  # Use colormap
         plt.xlabel("Latitude")
-        plt.ylabel("Longitude")
-        plt.title("Temperature by City Location")
-        plt.legend()
+        plt.ylabel("Temperature (Fahrenheit)")
+        plt.title("Temperature by Latitude")
         plt.grid(True)
-
-        # Show the plot
+        plt.xticks(np.arange(-90, 90, 10))
+        plt.legend(loc="upper left", bbox_to_anchor=(1.02, 1))
         plt.show()
 
-    
+        # Longitude vs Temperature
+        plt.figure(figsize=(8, 5))
+        for i, city_name in enumerate(city_names):
+            plt.scatter(longitudes[i], temperatures[i], label=city_name, s=40, c=plt.cm.viridis(i / len(city_names)))  # Use colormap
+        plt.xlabel("Longitude")
+        plt.ylabel("Temperature (Fahrenheit)")
+        plt.title("Temperature by Longitude")
+        plt.grid(True)
+        plt.xticks(np.arange(-180, 180, 10))
+        plt.legend(loc="upper left", bbox_to_anchor=(1.02, 1))
+        plt.show()
+
+

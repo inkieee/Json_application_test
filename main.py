@@ -36,18 +36,21 @@ class WeatherApp:
         from db_config import get_redis_connection
         import json
         r = get_redis_connection()
-        r.flushall()
+        # r.flushall()
 
 
         # Insert Weather Data into Redis
-        for city in self.cities:
-            weather_data = self.weather_client.get_weather(city)
-            if weather_data:
-                # print(f"\nCity: ",city)
-                # print(weather_data)
-                InsertRedisData(city, weather_data, r).insert_weather_data()
-            else:
-                print(f"Failed to retrieve weather data for {city}.")
+        #########################################
+        # Commented for now to save on API calls
+        #########################################
+        # for city in self.cities:
+        #     weather_data = self.weather_client.get_weather(city)
+        #     if weather_data:
+        #         # print(f"\nCity: ",city)
+        #         # print(weather_data)
+        #         InsertRedisData(city, weather_data, r).insert_weather_data()
+        #     else:
+        #         print(f"Failed to retrieve weather data for {city}.")
 
         # Do processing with data
         #Processing 1 object: Plot
@@ -56,6 +59,7 @@ class WeatherApp:
         city_plotter.plot_city_weather(city_keys)
 
         #Processing 2 object: Aggregation
+
 
         #Processing 3 object
                 
@@ -73,6 +77,24 @@ if __name__ == "__main__":
     weather_app.add_city("Shanghai")
     weather_app.add_city("Taipei")
     weather_app.add_city("Sydney")
+    weather_app.add_city("Moscow")
+    weather_app.add_city("Beijing")
+    weather_app.add_city("Berlin")
+    weather_app.add_city("Taizhong")
+    weather_app.add_city("Mount Laurel")
+    weather_app.add_city("Cherry Hill")
+    weather_app.add_city("New Delhi")
+    weather_app.add_city("Cairo")
+    weather_app.add_city("Ottawa")
+    weather_app.add_city("Canberra")
+    weather_app.add_city("Buenos Aires")
+    weather_app.add_city("Seoul")
+    weather_app.add_city("Tehran")
+    weather_app.add_city("Mexico City")
+    weather_app.add_city("Riyadh")
+    weather_app.add_city("Madrid")
+    weather_app.add_city("Bangkok")
+    weather_app.add_city("Amsterdam")
 
     # Run the app
     weather_app.run()
