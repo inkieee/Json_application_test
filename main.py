@@ -41,50 +41,46 @@ class WeatherApp:
         r = get_redis_connection()
         # r.flushall()
 
-
         # Insert Weather Data into Redis
-        #########################################
-        # Commented for now to save on API calls
-        #########################################
-        # for city in self.cities:
-        #     weather_data = self.weather_client.get_weather(city)
-        #     if weather_data:
-        #         # print(f"\nCity: ",city)
-        #         # print(weather_data)
-        #         InsertRedisData(city, weather_data, r).insert_weather_data()
-        #     else:
-        #         print(f"Failed to retrieve weather data for {city}.")
+        for city in self.cities:
+            weather_data = self.weather_client.get_weather(city)
+            if weather_data:
+                # print(f"\nCity: ",city)
+                # print(weather_data)
+                InsertRedisData(city, weather_data, r).insert_weather_data()
+            else:
+                print(f"Failed to retrieve weather data for {city}.")
 
         # Do processing with data
-        # #Processing 1 object: Plot
-        # city_plotter = PlotCityWeather(r)
-        # city_keys = city_plotter.get_city_keys()
-        # city_plotter.plot_city_weather(city_keys)
+        # Processing 1 object: Plot
+        city_plotter = PlotCityWeather(r)
+        city_keys = city_plotter.get_city_keys()
+        city_plotter.plot_city_weather(city_keys)
 
-        # #Processing 2 object: Sort city by temp
-        # city_sorter = SortCityTemp(r)
-        # city_keys = city_sorter.get_city_keys()
-        # sorted_cities, sorted_temperatures = city_sorter.sort_city_temp(city_keys)
+        # Processing 2 object: Sort city by temp
+        city_sorter = SortCityTemp(r)
+        city_keys = city_sorter.get_city_keys()
+        sorted_cities, sorted_temperatures = city_sorter.sort_city_temp(city_keys)
 
-        # print("Cities and temperatures sorted by temperature (ascending):")
-        # for i, city in enumerate(sorted_cities):
-        #     # Find the maximum length of (city names + ':') for consistent formatting
-        #     max_city_length = max(len(city) + 1 for city in sorted_cities)  # Add 1 for the colon
+        print("Cities and temperatures sorted by temperature (ascending):")
+        for i, city in enumerate(sorted_cities):
+            # Find the maximum length of (city names + ':') for consistent formatting
+            max_city_length = max(len(city) + 1 for city in sorted_cities)  # Add 1 for the colon
 
-        #     # Pad the city name and colon with spaces to ensure alignment
-        #     formatted_city_colon = f"{city}:"
-        #     padded_city = formatted_city_colon.ljust(max_city_length)
+            # Pad the city name and colon with spaces to ensure alignment
+            formatted_city_colon = f"{city}:"
+            padded_city = formatted_city_colon.ljust(max_city_length)
 
-        #     # Format temperature with two decimal places (even for zero)
-        #     formatted_temperature = f"{sorted_temperatures[i]:.2f}"  
+            # Format temperature with two decimal places (even for zero)
+            formatted_temperature = f"{sorted_temperatures[i]:.2f}"  
 
-        #     # Concatenate the padded city name and formatted temperature
-        #     formatted_output = f"{padded_city} {formatted_temperature}"
+            # Concatenate the padded city name and formatted temperature
+            formatted_output = f"{padded_city} {formatted_temperature}"
 
-        #     print(formatted_output)
+            print(formatted_output)
 
-        #Processing 3 object
-        #Find cities with temps above average
+        # Processing 3 object
+        # Find cities with temps above average
         find_cities = FindCitiesBelowAvgTemp(r)
         city_keys = find_cities.get_city_keys()
         city_data, avg_temp = find_cities.get_city_temperatures(city_keys)
