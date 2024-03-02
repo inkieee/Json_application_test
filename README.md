@@ -9,7 +9,7 @@
         SortCityTemp (Sorts city temperatures)
         FindCitiesBelowAvgTemp (Calculates avg temperature, finds cities below that)
     
-Requires:
+# Requires:
     Installed in environment:
         PyMySQL==1.1.0
         redis==5.0.1
