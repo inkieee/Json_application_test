@@ -5,6 +5,8 @@ from WeatherClient import WeatherClient
 from InsertRedisData import InsertRedisData
 from PlotCityWeather import PlotCityWeather
 from SortCityTemp import SortCityTemp
+from FindCitiesBelowAvgTemp import FindCitiesBelowAvgTemp
+
 class WeatherApp:
     """
     Class to manage weather data retrieval for a list of cities.
@@ -83,6 +85,18 @@ class WeatherApp:
 
         #Processing 3 object
         #Find cities with temps above average
+        find_cities = FindCitiesBelowAvgTemp(r)
+        city_keys = find_cities.get_city_keys()
+        city_data, avg_temp = find_cities.get_city_temperatures(city_keys)
+        cities_below_avg = find_cities.find_cities_below_avg(city_data, avg_temp)
+
+        if cities_below_avg:
+            print(f"Average temp: {avg_temp:.2f}")
+            print("Cities with temperatures below average:")
+            for city in cities_below_avg:
+                print(f"\t{city}")
+        else:
+            print("No cities found with temperatures below the average.")
 
 # Check if the script is run directly (not imported as a module)
 if __name__ == "__main__":
