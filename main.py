@@ -1,4 +1,3 @@
-
 #from module, import class
 from ApiKeyProvider import ApiKeyProvider
 from WeatherClient import WeatherClient
@@ -14,7 +13,10 @@ class WeatherApp:
     Args:
         Filename of api key (api_key.conf)
 
-    Returns nothing, but outputs:
+    Returns: 
+        Nothing
+    
+    Outputs:
         2 Matplotlib charts in succession
             Latitude vs Temperature
             Longitude vs Temperature
