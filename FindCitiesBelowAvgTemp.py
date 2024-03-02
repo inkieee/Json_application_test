@@ -4,7 +4,6 @@ class FindCitiesBelowAvgTemp:
     """
     Class to find cities with temperatures below the average of all cities.
     """
-
     def __init__(self, r):
         """
         Initializes object to pass in weather data.
@@ -15,6 +14,12 @@ class FindCitiesBelowAvgTemp:
         self.r = r
 
     def get_city_keys(self):
+        """
+        Obtains all redis keys for cities matching "weather_data:"
+
+        Returns:
+            keys (list): List of Redis keys for each city in Redis 
+        """
         # Pattern to match keys starting with "weather_data:"
         pattern = "weather_data:*"
 
@@ -26,11 +31,13 @@ class FindCitiesBelowAvgTemp:
     def get_city_temperatures(self, city_keys):
         """
         Gets city temperatures from Redis and calculates the average temperature.
+        
+        Args:
+            city_keys (list): List of Redis keys for each city in Redis 
 
         Returns:
-            tuple: A tuple containing:
-                - dict: A dictionary where keys are city names and values are temperatures.
-                - float: The average temperature of all cities.
+            city_data (dict): Dictionary containing city names and temperatures.
+            avg_temp (float): Average temperature of all cities.
         """
 
         city_data = {}
@@ -66,7 +73,7 @@ class FindCitiesBelowAvgTemp:
             avg_temp (float): Average temperature of all cities.
 
         Returns:
-            list: A list of city names with temperatures below the average.
+            below_avg_cities (list): A list of city names with temperatures below the average.
         """
 
         # city_data, avg_temp = self.get_city_temperatures()

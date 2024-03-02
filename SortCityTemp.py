@@ -14,6 +14,12 @@ class SortCityTemp:
         self.r = r
 
     def get_city_keys(self):
+        """
+        Obtains all redis keys for cities matching "weather_data:"
+
+        Returns:
+            keys (list): List of Redis keys for each city in Redis 
+        """
         # Pattern to match keys starting with "weather_data:"
         pattern = "weather_data:*"
 
@@ -27,10 +33,10 @@ class SortCityTemp:
         Sorts city names by temperature.
 
         Args:
-            city_keys: List of city keys to sort.
+            city_keys (list): List of Redis keys for each city in Redis 
 
         Returns:
-            list: A list of city names sorted by temperature in ascending order.
+            sorted_cities, sorted_temperature (list): A list of city names and associated temperatures sorted by temperature in ascending order.
         """
 
         city_data = {}  # Dictionary to store city name and temperature pairs

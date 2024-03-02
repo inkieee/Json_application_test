@@ -9,14 +9,24 @@ from FindCitiesBelowAvgTemp import FindCitiesBelowAvgTemp
 
 class WeatherApp:
     """
-    Class to manage weather data retrieval for a list of cities.
+    Class of main program. Main program obtains weather data from OpenWeatherMap and puts it into RedisJSON. It then retreives data from Redis and processes it.
+
+    Args:
+        Filename of api key (api_key.conf)
+
+    Returns nothing, but outputs:
+        2 Matplotlib charts in succession
+            Latitude vs Temperature
+            Longitude vs Temperature
+        Sorted Cities by Temperature (Terminal output)
+        Cities below Average temperature of cities (Terminal output)
     """
     def __init__(self, api_key_file="api_key.conf"):
         """
         Initializes the app with the API key file path.
 
         Args:
-            api_key_file (str, optional): Path to the file containing the API key. Defaults to "api_key.conf".
+            api_key_file (str): Path to the file containing the API key. Defaults to "api_key.conf".
         """
         self.api_key_provider = ApiKeyProvider(api_key_file)
         self.weather_client = WeatherClient(self.api_key_provider)
@@ -33,20 +43,18 @@ class WeatherApp:
 
     def run(self):
         """
-        Gets weather data for all cities in the list and displays the results.
+        Gets weather data for all cities in the list and intstantiates a InsertRedisData object.
         """
         # Open Redis Connection
         from db_config import get_redis_connection
         import json
         r = get_redis_connection()
-        # r.flushall()
+        r.flushall()
 
         # Insert Weather Data into Redis
         for city in self.cities:
             weather_data = self.weather_client.get_weather(city)
             if weather_data:
-                # print(f"\nCity: ",city)
-                # print(weather_data)
                 InsertRedisData(city, weather_data, r).insert_weather_data()
             else:
                 print(f"Failed to retrieve weather data for {city}.")
@@ -64,23 +72,19 @@ class WeatherApp:
 
         print("Cities and temperatures sorted by temperature (ascending):")
         for i, city in enumerate(sorted_cities):
-            # Find the maximum length of (city names + ':') for consistent formatting
+            # Find the max length of City name to format
             max_city_length = max(len(city) + 1 for city in sorted_cities)  # Add 1 for the colon
 
-            # Pad the city name and colon with spaces to ensure alignment
+            # Pad the city name and colon with spaces to alignment
             formatted_city_colon = f"{city}:"
             padded_city = formatted_city_colon.ljust(max_city_length)
-
-            # Format temperature with two decimal places (even for zero)
             formatted_temperature = f"{sorted_temperatures[i]:.2f}"  
-
-            # Concatenate the padded city name and formatted temperature
             formatted_output = f"{padded_city} {formatted_temperature}"
 
             print(formatted_output)
 
         # Processing 3 object
-        # Find cities with temps above average
+        # Find cities with temps below average
         find_cities = FindCitiesBelowAvgTemp(r)
         city_keys = find_cities.get_city_keys()
         city_data, avg_temp = find_cities.get_city_temperatures(city_keys)
@@ -92,11 +96,13 @@ class WeatherApp:
             for city in cities_below_avg:
                 print(f"\t{city}")
         else:
-            print("No cities found with temperatures below the average.")
+            print("No cities found with temperatures below the average.") #If no cities
 
-# Check if the script is run directly (not imported as a module)
+
 if __name__ == "__main__":
-    # Create WeatherApp instance (optional)
+    """
+    Runs the weather app if script is run directly.
+    """
     weather_app = WeatherApp()
 
     # Add cities to the list

@@ -16,15 +16,27 @@ class PlotCityWeather:
         self.r = r
 
     def get_city_keys(self):
+        """
+        Obtains all redis keys for cities matching "weather_data:"
+
+        Returns:
+            keys (list): List of Redis keys for each city in Redis 
+        """
         # Pattern to match keys starting with "weather_data:"
         pattern = "weather_data:*"
 
         # Get all keys matching the pattern
         keys = self.r.keys(pattern)
-
+        print(type(keys))
         return keys
     
     def plot_city_weather(self, city_keys):
+        """
+        Plots the current stored Redis temperature against city coordinates
+
+        Args:
+            city_keys (list): List of Redis keys for each city in Redis 
+        """
         # Initialize lists to store data
         latitudes = []
         longitudes = []
